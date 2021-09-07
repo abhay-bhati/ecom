@@ -36,4 +36,38 @@ exports.fetchCart = (req, res, next) => {
         console.log(result);
         res.json(result);
     })
+};
+
+exports.incrementCart = (req, res, next) => {
+    console.log(req.body);
+    console.log('inc cart');
+    console.log(req.user);
+    Products.fetchCart(req.user, (result) => {
+        console.log('contro prod.js 46');
+        console.log(result);
+        const targetIndex = result.findIndex(element => element.id === req.body.product_id);
+        console.log(targetIndex);
+        if(req.body.action==='plus'){
+            if(result[targetIndex].quantity < 5){
+                result[targetIndex].quantity += 1;
+            }
+        }
+        else if(req.body.action==='minus'){
+            if(result[targetIndex].quantity > 1){
+                result[targetIndex].quantity -= 1
+            }
+        }
+        else{
+            result.splice(targetIndex,1);
+        }
+        console.log('51');
+        console.log(result);
+        Products.updateCart(req.user, result, () => {
+            console.log('update done');
+            console.log(result);
+            res.json(result);
+        }) 
+
+    })
+
 }

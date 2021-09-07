@@ -42,7 +42,28 @@ class Products {
                 throw new Error(err)
             }
             if (result) {
-                const newCart = [...result.cart, product];
+                console.log('model prod.js 45');
+                console.log(result.cart);
+                console.log('47');
+                const existingProd = result.cart.filter(element => element.id === product.id);
+                console.log(existingProd);
+                let newCart;
+                if(existingProd.length === 0){
+                    console.log('50');
+                    console.log(result.cart);
+                    newCart = [...result.cart, {...product, quantity:1}]
+                }
+                else{
+                    console.log('53');
+                    console.log(result.cart);
+                    const newResult = result.cart.filter(element => element.id !==product.id)
+                    console.log('59');
+                    console.log(existingProd)
+                    console.log(existingProd[0].quantity);
+                    let prevQuant = existingProd[0].quantity;
+                    newCart = [...newResult, {...product, quantity:prevQuant + 1}];
+                }
+                console.log('64');
                 console.log(newCart);
                 db.collection('auth').updateOne({ email: email }, { $set: { cart:newCart}},(err, result) => {
                     if(err){
@@ -69,6 +90,18 @@ class Products {
                 console.log('ee');
                 console.log(result);
                 cb(result.cart);
+            }
+        })
+    }
+
+    static updateCart(email, cart, cb) {
+        const db = getDb();
+        db.collection('auth').updateOne({email:email},{$set:{cart:cart}}, (err, result) => {
+            if(err){
+                throw new Error(err)
+            }
+            else{
+                cb();
             }
         })
     }

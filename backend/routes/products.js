@@ -11,7 +11,9 @@ router.post('/product-by-id', productsController.prodById);
 
 router.post('/add-to-cart',authorization, productsController.addToCart)
 
-router.get('/cart',authorization, productsController.fetchCart)
+router.get('/cart',authorization, productsController.fetchCart);
+
+router.post('/cart-increment', authorization, productsController.incrementCart)
 
 
 
