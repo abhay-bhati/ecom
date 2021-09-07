@@ -10,7 +10,11 @@ function authorization(req, res, next){
             throw new Error(err)
         };
         if(result !== null){
+            console.log('aaaaaaaaaaaaaaaaauuuuuuuuu');
+            console.log(req.user);
+            console.log(req.name);
             req.user = result.email;
+            req.name = result.name
             next();
         }
         else{

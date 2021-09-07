@@ -4,7 +4,10 @@ exports.allProds = (req, res, next) => {
     console.log('all prods');
     Products.fetch((result) => {
         console.log(result)
-        res.json(result);
+        console.log(req.user);
+        console.log('uuuuuuuuuuuuuuuuuuuuuuuuuu');
+        console.log(req.name);
+        res.json({result:result,user_info:[req.user, req.name]});
     })
 }
 

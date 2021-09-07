@@ -12,7 +12,7 @@ exports.loginController = (req, res, next) => {
             return
         }
         if (result.password === req.body.password) {
-            const token = jwt.sign({ email: result.email }, process.env.JWT_TOKEN, { expiresIn: '1h' });
+            const token = jwt.sign({ email: result.email, name:result.fullName }, process.env.JWT_TOKEN, { expiresIn: '1h' });
             res.json({ token: token })
         }
         else {
