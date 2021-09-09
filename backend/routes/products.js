@@ -13,7 +13,11 @@ router.post('/add-to-cart',authorization, productsController.addToCart)
 
 router.get('/cart',authorization, productsController.fetchCart);
 
-router.post('/cart-increment', authorization, productsController.incrementCart)
+router.post('/cart-increment', authorization, productsController.incrementCart);
+
+router.post('/add-to-orders', authorization, productsController.addToOrders);
+
+router.get('/myorders', authorization, productsController.fetchOrders);
 
 
 

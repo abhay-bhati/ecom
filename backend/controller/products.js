@@ -74,3 +74,24 @@ exports.incrementCart = (req, res, next) => {
     })
 
 }
+
+exports.addToOrders = (req, res, next) => {
+    console.log(req.body);
+    console.log(req.user);
+    res.send({message:'received'});
+    
+    Products.addtoorders(req.user, req.body, () => {
+
+    })
+}
+
+exports.fetchOrders = (req, res, next) => {
+    console.log(req.user);
+    Products.fetchorders(req.user, (result) => {
+        console.log('91');
+        if(result===null){
+            res.json({message:'no user'})
+        }
+        res.json(result);
+    })
+}
