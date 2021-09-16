@@ -127,7 +127,7 @@ class Products {
                 console.log(result);
                 console.log(result.myorders);
                 let order_id = res.insertedId
-                let newOrdersArr = [...result.myorders, {order_id, ...cartdata}];
+                let newOrdersArr = [...result.myorders, { order_id, ...cartdata }];
                 console.log(res.insertedId)
                 console.log('144');
 
@@ -155,19 +155,65 @@ class Products {
 
     }
 
-    static fetchorders (email, cb) {
+    static fetchorders(email, cb) {
+        const db = getDb();
+        db.collection('auth').findOne({ email: email }, (err, result) => {
+            if (err) {
+                throw new Error(err);
+            }
+            console.log('163');
+            console.log(result);
+            if (result === null) {
+                cb(result);
+            }
+            console.log(result.myorders);
+            cb(result.myorders);
+        })
+    }
+
+    static addtowishlist(email, product, cb) {
+        const db = getDb();
+        db.collection('auth').findOne({ email: email }, (err, result) => {
+            if (err) {
+                throw new Error(err);
+            }
+            console.log(result);
+            console.log(result.mywishlist);
+            if (result === null) {
+                console.log('result not found');
+            }
+            console.log('185');
+            console.log(product);
+            const wishlisted = result.mywishlist.filter(element => element.id === product.id);
+            console.log(wishlisted);
+            if (wishlisted.length === 0) {
+                console.log('wishlisted is null')
+                let newWishlist = [product, ...result.mywishlist,]
+                db.collection('auth').updateOne({ email: email }, { $set: { mywishlist: newWishlist } }, (err, result) => {
+                    console.log('189');
+                    cb({message:'product added to wishlist'});
+                })
+            }
+            else {
+                console.log('wishlist is not null');
+                cb({message:'products already in wishlist'})
+            }
+
+
+        })
+    }
+
+    static fetchwishlist (email, cb) {
         const db = getDb();
         db.collection('auth').findOne({email:email}, (err, result) => {
             if(err){
                 throw new Error(err);
             }
-            console.log('163');
-            console.log(result);
+            console.log('212');
             if(result===null){
-                cb(result);
+                cb(result)
             }
-            console.log(result.myorders);
-            cb(result.myorders);
+            cb(result.mywishlist);
         })
     }
 

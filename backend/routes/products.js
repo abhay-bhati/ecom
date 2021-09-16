@@ -19,6 +19,9 @@ router.post('/add-to-orders', authorization, productsController.addToOrders);
 
 router.get('/myorders', authorization, productsController.fetchOrders);
 
+router.post('/add-to-wishlist', authorization, productsController.addToWishlist);
+
+router.get('/mywishlist', authorization, productsController.fetchWishlist);
 
 
 module.exports = router;

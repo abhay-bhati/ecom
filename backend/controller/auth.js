@@ -26,7 +26,7 @@ exports.loginController = (req, res, next) => {
 exports.registerController = (req, res, next) => {
     console.log('register');
     console.log(req.body);
-    const data = {...req.body, cart:[], myorders:[]};
+    const data = {...req.body, cart:[], myorders:[], mywishlist:[]};
     console.log('2323323');
     console.log(data);
     console.log('sdlf;asdf');

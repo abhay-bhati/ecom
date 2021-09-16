@@ -95,3 +95,26 @@ exports.fetchOrders = (req, res, next) => {
         res.json(result);
     })
 }
+
+exports.addToWishlist = (req, res, next) => {
+    console.log(req.user);
+    Products.addtowishlist(req.user, req.body, (result) => {
+        console.log('all done');
+        res.json({message:result.message})
+    })
+}
+
+exports.fetchWishlist = (req, res, next) => {
+    console.log(req.user);
+    Products.fetchwishlist(req.user, (result) => {
+        console.log('here dfsd');
+        console.log(result);
+        if(result===null){
+            console.log('1');
+        }
+        else{
+            console.log('2');
+            res.json(result);
+        }
+    })
+}
